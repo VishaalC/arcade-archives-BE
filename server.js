@@ -1,15 +1,12 @@
 import express from 'express'
 import connection from './src/config/db.config.js'
+import { router } from './src/routes/users.js'
 
 const app = express()
-const PORT = 3000
 
 connection()
+app.use('/user', router)
 
-app.get('/', (req, res) => {
-  res.send('what')
-})
-
-app.listen(PORT, () => {
-  console.log('listening on 3000')
+app.listen(8080, () => {
+  console.log('listening on 8080')
 })
