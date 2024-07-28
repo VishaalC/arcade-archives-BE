@@ -13,11 +13,13 @@ const readUsers = async (req, res) => {
     const users = await UserService.readAllUsers()
     sendResponse(res, users, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
     logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USER_SUCCESS)
-  } catch {
+  } catch (error) {
     logger.error(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USER_ERROR)
     sendErrorResponse(
+      res,
       STATUS_CODE.INTERNAL_SERVER_ERROR,
-      STATUS_MESSAGES.SERVER_ERROR
+      STATUS_MESSAGES.SERVER_ERROR,
+      error.message
     )
   }
 }
@@ -27,14 +29,35 @@ const readOneUser = async (req, res) => {
   try {
     const id = req.params.id
     const user = await UserService.readOneUser(id)
-    res.status(200).json(user)
+    sendResponse(res, user, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
     logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USER_SUCCESS)
-  } catch {
+  } catch (error) {
     logger.error(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USERS_ERROR)
-    res.sendStatus(500)
+    sendErrorResponse(
+      res,
+      STATUS_CODE.INTERNAL_SERVER_ERROR,
+      STATUS_MESSAGES.SERVER_ERROR,
+      error.message
+    )
   }
 }
 
-const addUser = async (req, res) => {}
+const addUser = async (req, res) => {
+  logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_ADD_USER)
+  try {
+    const newUser = req.body
+    const addedUser = await UserService.addUser(newUser)
+    sendResponse(res, addedUser, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+    logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_ADD_USER_SUCCESS)
+  } catch (error) {
+    logger.error(LOGGER_CONSTANTS.USER_CONTROLLER_ADD_USER_ERROR)
+    sendErrorResponse(
+      res,
+      STATUS_CODE.INTERNAL_SERVER_ERROR,
+      STATUS_MESSAGES.SERVER_ERROR,
+      error.message
+    )
+  }
+}
 
 export const userController = { readUsers, readOneUser, addUser }

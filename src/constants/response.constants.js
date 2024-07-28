@@ -21,4 +21,10 @@ const STATUS_MESSAGES = {
   NOT_FOUND: 'No Resource Found',
 }
 
-export { STATUS_CODE, STATUS_MESSAGES }
+const ERROR_MESSAGE = {
+  USER_RETRIEVE_ERROR: 'Error while retrieving user',
+  USER_ALREADY_EXISTS: 'User already exists',
+  INVALID_PATH_PARAM: 'Invalid path parameters',
+}
+
+export { STATUS_CODE, STATUS_MESSAGES, ERROR_MESSAGE }
