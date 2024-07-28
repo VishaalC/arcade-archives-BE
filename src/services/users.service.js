@@ -6,9 +6,13 @@ import { ERROR_MESSAGE } from '../constants/response.constants.js'
 const readOneUser = async (id) => {
   try {
     const user = await User.findById(id)
-    return user
-  } catch {
-    throw new Error(ERROR_MESSAGE.USER_RETRIEVE_ERROR)
+    if (user) {
+      return user
+    } else {
+      throw new Error('User not found')
+    }
+  } catch (error) {
+    throw error
   }
 }
 

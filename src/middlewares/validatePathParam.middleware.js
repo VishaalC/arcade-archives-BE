@@ -16,14 +16,18 @@ export const validatePathParam = (req, res, next) => {
       )
 }
 
-export const validateData = (data) => {
+export const validateData = (params) => {
   return (req, res, next) => {
     let flag = false
-    Object.keys(req.params).forEach((key) => {
-      if (!params.includes(key)) {
-        flag = true
-      }
-    })
+    if (params.length === Object.keys(req.body).length) {
+      Object.keys(req.body).forEach((key) => {
+        if (!params.includes(key)) {
+          flag = true
+        }
+      })
+    } else {
+      flag = true
+    }
     flag
       ? sendErrorResponse(
           res,
