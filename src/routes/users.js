@@ -4,14 +4,19 @@ import {
   validatePathParam,
   validateData,
 } from '../middlewares/validatePathParam.middleware.js'
+import { validateImage } from '../middlewares/multerValidate.middleware.js'
+import { ROUTE_CONSTANTS } from '../constants/route.constants.js'
 
 const router = express.Router()
+router.use(express.urlencoded({ extended: true }))
 router.use(express.json())
+
 router.get('/', userController.readUsers)
 router.get('/:id', validatePathParam, userController.readOneUser)
 router.post(
   '/',
-  validateData(['name', 'password', 'userName', 'email', 'isAdmin']),
+  validateImage,
+  validateData(ROUTE_CONSTANTS.USER_SCHEMA),
   userController.addUser
 )
 export { router }

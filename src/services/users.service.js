@@ -2,6 +2,7 @@ import User from '../models/user.js'
 import bcrypt from 'bcrypt'
 import { APP_CONSTANTS } from '../constants/app.constants.js'
 import { ERROR_MESSAGE } from '../constants/response.constants.js'
+import { uploadImage } from './cloudinary.service.js'
 
 const readOneUser = async (id) => {
   try {
@@ -9,7 +10,7 @@ const readOneUser = async (id) => {
     if (user) {
       return user
     } else {
-      throw new Error('User not found')
+      return
     }
   } catch (error) {
     throw error
@@ -31,11 +32,24 @@ const addUser = async (user) => {
     if (existingUser) {
       throw new Error(ERROR_MESSAGE.USER_ALREADY_EXISTS)
     } else {
+      let addedUser
       const hashedPassword = await bcrypt.hash(
         user.password,
         APP_CONSTANTS.SALT_ROUNDS
       )
-      const addedUser = await User.create({ ...user, password: hashedPassword })
+      if (user.image) {
+        const results = await uploadImage(user.image, 'profile')
+        addedUser = await User.create({
+          ...user,
+          password: hashedPassword,
+          image: results,
+        })
+      } else {
+        addedUser = await User.create({
+          ...user,
+          password: hashedPassword,
+        })
+      }
       return addedUser
     }
   } catch (error) {
@@ -43,4 +57,17 @@ const addUser = async (user) => {
   }
 }
 
-export const UserService = { readAllUsers, readOneUser, addUser }
+const editUser = async (user) => {
+  try {
+    const editedUser = UserService.replaceOne({ _id: { $eq: user._id } }, user)
+    if (editedUser) {
+      return editedUser
+    } else {
+      return
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
+export const UserService = { readAllUsers, readOneUser, addUser, editUser }

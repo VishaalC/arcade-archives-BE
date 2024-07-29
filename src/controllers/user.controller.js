@@ -29,7 +29,14 @@ const readOneUser = async (req, res) => {
   try {
     const id = req.params.id
     const user = await UserService.readOneUser(id)
-    sendResponse(res, user, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+    user
+      ? sendResponse(res, user, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+      : sendResponse(
+          res,
+          user,
+          STATUS_MESSAGES.NOT_FOUND,
+          STATUS_CODE.NOT_FOUND
+        )
     logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USER_SUCCESS)
   } catch (error) {
     logger.error(LOGGER_CONSTANTS.USER_CONTROLLER_READ_USERS_ERROR)
@@ -45,7 +52,8 @@ const readOneUser = async (req, res) => {
 const addUser = async (req, res) => {
   logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_ADD_USER)
   try {
-    const newUser = req.body
+    const newUser = { ...req.body }
+    req.file ? (newUser.image = req.file.path) : ''
     const addedUser = await UserService.addUser(newUser)
     sendResponse(res, addedUser, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
     logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_ADD_USER_SUCCESS)
@@ -60,4 +68,24 @@ const addUser = async (req, res) => {
   }
 }
 
-export const userController = { readUsers, readOneUser, addUser }
+const editUser = async (req, res) => {
+  logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_EDIT_USER)
+  try {
+    const newUser = req.body
+    const editedUser = await UserService.editUser(newUser)
+    editedUser
+      ? sendResponse(res, editedUser, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+      : sendResponse(res, '', STATUS_MESSAGES.NOT_FOUND, STATUS_CODE.NOT_FOUND)
+    logger.info(LOGGER_CONSTANTS.USER_CONTROLLER_EDIT_USER_SUCCESS)
+  } catch (error) {
+    logger.error(LOGGER_CONSTANTS.USER_CONTROLLER_EDIT_USER_ERROR)
+    sendErrorResponse(
+      res,
+      STATUS_CODE.INTERNAL_SERVER_ERROR,
+      STATUS_MESSAGES.SERVER_ERROR,
+      error.message
+    )
+  }
+}
+
+export const userController = { readUsers, readOneUser, addUser, editUser }

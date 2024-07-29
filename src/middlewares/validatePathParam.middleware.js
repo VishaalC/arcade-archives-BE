@@ -18,10 +18,14 @@ export const validatePathParam = (req, res, next) => {
 
 export const validateData = (params) => {
   return (req, res, next) => {
+    let user = JSON.parse(JSON.stringify(req.body))
+    let userSize = Object.keys(user).length
     let flag = false
-    if (params.length === Object.keys(req.body).length) {
+
+    if (userSize == 6 || userSize == 5) {
       Object.keys(req.body).forEach((key) => {
         if (!params.includes(key)) {
+          console.log(key)
           flag = true
         }
       })
@@ -33,7 +37,7 @@ export const validateData = (params) => {
           res,
           STATUS_CODE.BAD_REQUEST,
           STATUS_MESSAGES.BAD_REQUEST,
-          ERROR_MESSAGE.INVALID_PATH_PARAM
+          ERROR_MESSAGE.INVALID_USER_SCHEMA
         )
       : next()
   }

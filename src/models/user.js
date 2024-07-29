@@ -6,6 +6,17 @@ const userSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   isAdmin: { type: Number, required: true },
+  image: {
+    publicId: {
+      type: String,
+    },
+    url: {
+      type: String,
+    },
+  },
+  bio: {
+    type: String,
+  },
 })
 
 const User = model('User', userSchema)

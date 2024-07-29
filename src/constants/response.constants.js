@@ -25,6 +25,8 @@ const ERROR_MESSAGE = {
   USER_RETRIEVE_ERROR: 'Error while retrieving user',
   USER_ALREADY_EXISTS: 'User already exists',
   INVALID_PATH_PARAM: 'Invalid path parameters',
+  INVALID_FILE: 'Invalid file passed',
+  INVALID_USER_SCHEMA: 'Invalid user schema',
 }
 
 export { STATUS_CODE, STATUS_MESSAGES, ERROR_MESSAGE }
