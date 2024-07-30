@@ -27,6 +27,9 @@ const ERROR_MESSAGE = {
   INVALID_PATH_PARAM: 'Invalid path parameters',
   INVALID_FILE: 'Invalid file passed',
   INVALID_USER_SCHEMA: 'Invalid user schema',
+  GAME_RETRIEVE_ERROR: 'Error while retrieving game data',
+  GAME_ALREADY_EXISTS: 'Game already exists',
+  RATINGS_NOT_FOUND: 'Rating not found',
 }
 
 export { STATUS_CODE, STATUS_MESSAGES, ERROR_MESSAGE }

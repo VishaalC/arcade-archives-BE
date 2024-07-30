@@ -13,7 +13,7 @@ const readOneUser = async (id) => {
       return
     }
   } catch (error) {
-    throw error
+    throw new Error(ERROR_MESSAGE.USER_RETRIEVE_ERROR)
   }
 }
 

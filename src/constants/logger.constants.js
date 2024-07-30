@@ -11,4 +11,18 @@ export const LOGGER_CONSTANTS = {
   USER_CONTROLLER_EDIT_USER: 'START: User controller: editUser started',
   USER_CONTROLLER_EDIT_USER_SUCCESS: 'Used edited successfuly',
   USER_CONTROLLER_EDIT_USER_ERROR: 'Unable to edit user',
+  GAME_CONTROLLER: {
+    READ_GAMES: 'START: Game controller: readGames started',
+    READ_GAMES_SUCCESS: 'Games retrieved from database',
+    READ_GAMES_ERROR: 'Error while retrieving games',
+    READ_GAME: 'START: Game controller: readGame started',
+    READ_GAME_SUCCESS: 'Game retrieved from database',
+    READ_GAME_ERROR: 'Error while retrieving game',
+    ADD_GAME: 'START: Game controller: addGames started',
+    ADD_GAME_SUCCESS: 'Game added to database',
+    ADD_GAME_FAILURE: 'Error while adding game to database',
+    ADD_RATING: 'START: Game controller: addRating started',
+    ADD_GAME_SUCCESS: 'Rating added to database',
+    ADD_GAME_FAILURE: 'Error while adding rating to database',
+  },
 }

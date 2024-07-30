@@ -1,13 +1,33 @@
-import Rating from '../models/rating'
+import Rating from '../models/rating.js'
+import { gameService } from './games.service.js'
+import { UserService } from './users.service.js'
 
-const readAllRatings = async () => {
-  const res = await Rating.find()
-  return res
+const readRatingsForOneGame = async (gameId) => {
+  try {
+    const ratings = await Rating.find({ gameId: gameId })
+    if (ratings.length == 0) {
+      return
+    } else {
+      return ratings
+    }
+  } catch (error) {
+    throw error
+  }
 }
 
 const addRating = async (rating) => {
-  const res = await Rating.create(rating)
-  return res
+  try {
+    const gameExist = await gameService.readOneGame(rating.gameId)
+    const userExist = await UserService.readOneUser(rating.userId)
+    if (gameExist && userExist) {
+      const addedRating = await Rating.create(rating)
+      return addedRating
+    } else {
+      return
+    }
+  } catch (error) {
+    throw error
+  }
 }
 
-export const RatingService = { readAllRatings, addRating }
+export const RatingService = { readRatingsForOneGame, addRating }
