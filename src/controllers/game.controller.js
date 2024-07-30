@@ -67,6 +67,26 @@ const addGame = async (req, res) => {
 
 const addRating = async (req, res) => {
   logger.info(LOGGER_CONSTANTS.GAME_CONTROLLER.ADD_RATING)
+  try {
+    const newRating = await RatingService.addRating(req.body)
+    newRating
+      ? sendResponse(res, newRating, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+      : sendResponse(
+          res,
+          'Game or User not found',
+          STATUS_MESSAGES.NOT_FOUND,
+          STATUS_CODE.NOT_FOUND
+        )
+    logger.info(LOGGER_CONSTANTS.GAME_CONTROLLER.ADD_RATING_SUCCESS)
+  } catch (error) {
+    logger.error(LOGGER_CONSTANTS.GAME_CONTROLLER.ADD_RATING_FAILURE)
+    sendErrorResponse(
+      res,
+      STATUS_CODE.INTERNAL_SERVER_ERROR,
+      STATUS_MESSAGES.SERVER_ERROR,
+      error.message
+    )
+  }
 }
 
-export const gameController = { readGames, readOneGame, addGame }
+export const gameController = { readGames, readOneGame, addGame, addRating }

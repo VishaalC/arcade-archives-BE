@@ -10,8 +10,8 @@ const readOneGame = async (id) => {
     } else {
       return
     }
-  } catch {
-    throw new Error(ERROR_MESSAGE.GAME_RETRIEVE_ERROR)
+  } catch (error) {
+    throw new Error(error)
   }
 }
 

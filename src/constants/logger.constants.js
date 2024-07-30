@@ -22,7 +22,7 @@ export const LOGGER_CONSTANTS = {
     ADD_GAME_SUCCESS: 'Game added to database',
     ADD_GAME_FAILURE: 'Error while adding game to database',
     ADD_RATING: 'START: Game controller: addRating started',
-    ADD_GAME_SUCCESS: 'Rating added to database',
-    ADD_GAME_FAILURE: 'Error while adding rating to database',
+    ADD_RATING_SUCCESS: 'Rating added to database',
+    ADD_RATING_FAILURE: 'Error while adding rating to database',
   },
 }
