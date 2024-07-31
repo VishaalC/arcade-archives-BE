@@ -30,6 +30,7 @@ const ERROR_MESSAGE = {
   GAME_RETRIEVE_ERROR: 'Error while retrieving game data',
   GAME_ALREADY_EXISTS: 'Game already exists',
   RATINGS_NOT_FOUND: 'Rating not found',
+  GAME_USER_NOT_FOUND: 'Game or user not found',
 }
 
 export { STATUS_CODE, STATUS_MESSAGES, ERROR_MESSAGE }

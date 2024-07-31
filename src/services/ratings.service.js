@@ -15,6 +15,19 @@ const readRatingsForOneGame = async (gameId) => {
   }
 }
 
+const readRatingsForOneUser = async (userId) => {
+  try {
+    const ratings = await Rating.find({ userId: userId })
+    if (ratings.length == 0) {
+      return
+    } else {
+      return ratings
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 const addRating = async (rating) => {
   try {
     const gameExist = await gameService.readOneGame(rating.gameId)
@@ -30,4 +43,8 @@ const addRating = async (rating) => {
   }
 }
 
-export const RatingService = { readRatingsForOneGame, addRating }
+export const RatingService = {
+  readRatingsForOneGame,
+  addRating,
+  readRatingsForOneUser,
+}

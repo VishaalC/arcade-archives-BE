@@ -5,6 +5,8 @@ import {
   STATUS_CODE,
   STATUS_MESSAGES,
 } from '../constants/response.constants.js'
+import { RatingService } from '../services/ratings.service.js'
+import { ReviewService } from '../services/reviews.service.js'
 import { sendResponse, sendErrorResponse } from '../utils/response.utils.js'
 
 const readUsers = async (req, res) => {
@@ -29,8 +31,16 @@ const readOneUser = async (req, res) => {
   try {
     const id = req.params.id
     const user = await UserService.readOneUser(id)
+    const reviews = await ReviewService.readAllReviewsForOneUser(id)
+    const ratings = await RatingService.readRatingsForOneUser(id)
+    const fullUserDetails = { user, reviews: reviews, ratings: ratings }
     user
-      ? sendResponse(res, user, STATUS_MESSAGES.SUCCESS, STATUS_CODE.OK)
+      ? sendResponse(
+          res,
+          fullUserDetails,
+          STATUS_MESSAGES.SUCCESS,
+          STATUS_CODE.OK
+        )
       : sendResponse(
           res,
           user,

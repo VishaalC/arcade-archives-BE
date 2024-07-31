@@ -4,6 +4,7 @@ const review = mongoose.Schema({
   gameId: { type: String, required: true },
   review: { type: String, required: true },
   userId: { type: String, required: true },
+  imageUrl: { type: String, required: true },
 })
 
 const Review = model('Review', review)

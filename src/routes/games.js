@@ -11,4 +11,5 @@ gameRouter.get('/', gameController.readGames)
 gameRouter.get('/:id', validatePathParam, gameController.readOneGame)
 gameRouter.post('/', validateImage, gameController.addGame)
 gameRouter.post('/rating', gameController.addRating)
+gameRouter.post('/review', gameController.addReview)
 export { gameRouter }
