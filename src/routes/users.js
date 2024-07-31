@@ -16,7 +16,7 @@ router.get('/:id', validatePathParam, userController.readOneUser)
 router.post(
   '/',
   validateImage,
-  validateData(ROUTE_CONSTANTS.USER_SCHEMA),
+  validateData(ROUTE_CONSTANTS.USER_SCHEMA, 6, 5),
   userController.addUser
 )
 export { router }

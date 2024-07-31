@@ -16,16 +16,15 @@ export const validatePathParam = (req, res, next) => {
       )
 }
 
-export const validateData = (params) => {
+export const validateData = (params, minLength, maxLength) => {
   return (req, res, next) => {
     let user = JSON.parse(JSON.stringify(req.body))
     let userSize = Object.keys(user).length
     let flag = false
 
-    if (userSize == 6 || userSize == 5) {
+    if (userSize == maxLength || userSize == minLength) {
       Object.keys(req.body).forEach((key) => {
         if (!params.includes(key)) {
-          console.log(key)
           flag = true
         }
       })
